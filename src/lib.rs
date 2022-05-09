@@ -3,14 +3,14 @@ use std::str::FromStr;
 
 #[derive(Debug, Copy, Clone)]
 enum Numeral {
-    I,
-    V,
-    X,
-    L,
-    C,
-    D,
-    M,
-    Other,
+    I = 1,
+    V = 5,
+    X = 10,
+    L = 50,
+    C = 100,
+    D = 500,
+    M = 1000,
+    Other = 0,
 }
 
 impl Numeral {
@@ -24,19 +24,6 @@ impl Numeral {
             'D' => Numeral::D,
             'M' => Numeral::M,
             _ => Numeral::Other,
-        }
-    }
-
-    fn numeral_to_i32(&self) -> i32 {
-        match self {
-            Numeral::I => 1,
-            Numeral::V => 5,
-            Numeral::X => 10,
-            Numeral::L => 50,
-            Numeral::C => 100,
-            Numeral::D => 500,
-            Numeral::M => 1000,
-            Numeral::Other => 0,
         }
     }
 }
@@ -53,6 +40,7 @@ struct Numerals {
 
 impl FromStr for Numerals {
     type Err = ParseNumeralError;
+
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Ok(Self {
             numerals: s.to_uppercase().chars().map(Numeral::from_char).collect(),
@@ -65,23 +53,21 @@ impl Numerals {
         Self { numerals }
     }
 
-    fn convert_to_int(self) -> i32 {
-        let mut total = 0;
+    fn convert_to_int(&self) -> i32 {
         let mut max = 0;
 
         self.numerals
-            .into_iter()
+            .iter()
             .rev()
-            .map(|numeral| numeral.numeral_to_i32())
-            .for_each(|number: i32| {
-                total += match number.cmp(&max) {
+            .map(|number| *number as i32)
+            .map(|number: i32| {
+                match number.cmp(&max) {
                     Ordering::Less => -number,
                     Ordering::Equal => number,
-                    Ordering::Greater => { max = number; number }
+                    Ordering::Greater => { max = number; return number; }
                 }
-            });
-
-        total
+            })
+            .sum()
     }
 }
 
