@@ -1,0 +1,28 @@
+* Roman Numeral Conversion
+A small rust project to convert roman numerals to the integer equivalent.
+
+|---------------+---------|
+| Roman Numeral | Integer |
+|---------------+---------|
+| Ⅰ             |       1 |
+| Ⅴ             |       5 |
+| Ⅹ             |      10 |
+| Ⅼ             |      50 |
+| Ⅽ             |     100 |
+| Ⅾ             |     500 |
+| Ⅿ             |    1000 |
+|---------------+---------|
+
+
+#+begin_src rust
+fn main() {
+    let numerals = "IV";
+    let numerals: Numerals = Numerals::new(numerals);
+
+    println!("{}", numerals.convert_to_int());
+}
+#+end_src
+
+#+begin_example
+4
+#+end_example
