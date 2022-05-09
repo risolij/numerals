@@ -64,7 +64,7 @@ impl Numerals {
                 match number.cmp(&max) {
                     Ordering::Less => -number,
                     Ordering::Equal => number,
-                    Ordering::Greater => { max = number; return number; }
+                    Ordering::Greater => { max = number; number }
                 }
             })
             .sum()
