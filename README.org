@@ -16,8 +16,7 @@ A small rust project to convert roman numerals to the integer equivalent.
 
 #+begin_src rust
 fn main() {
-    let numerals = "IV";
-    let numerals: Numerals = Numerals::new(numerals);
+    let numerals: Numerals = Numerals::from_str("IV").unwrap();
 
     println!("{}", numerals.convert_to_int());
 }
