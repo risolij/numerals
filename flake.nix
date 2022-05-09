@@ -26,7 +26,7 @@
             pkg-config
             gcc
             openssl
-            exa
+            rust-analyzer
             (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
               extensions = ["rust-src"];
             }))
