@@ -73,7 +73,6 @@ impl Numerals {
             .into_iter()
             .rev()
             .map(|numeral| numeral.numeral_to_i32())
-            .filter(|x| x != 0)
             .for_each(|number: i32| {
                 total += match number.cmp(&max) {
                     Ordering::Less => -number,
