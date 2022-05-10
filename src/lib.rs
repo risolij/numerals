@@ -54,17 +54,15 @@ impl Numerals {
     }
 
     fn convert_to_int(&self) -> i32 {
-        let mut max = 0;
-
         self.numerals
             .iter()
             .rev()
             .map(|number| *number as i32)
-            .map(|number: i32| {
-                match number.cmp(&max) {
-                    Ordering::Less => -number,
-                    Ordering::Equal => number,
-                    Ordering::Greater => { max = number; number }
+            .scan(0, | state, number: i32 | {
+                match number.cmp(&state) {
+                    Ordering::Less => Some(-number),
+                    Ordering::Equal => Some(number),
+                    Ordering::Greater => { *state = number; Some(number) }
                 }
             })
             .sum()
