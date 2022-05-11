@@ -13,8 +13,8 @@ enum Numeral {
     Other = 0,
 }
 
-impl Numeral {
-    fn from_char(input: char) -> Self {
+impl From<char> for Numeral {
+    fn from(input: char) -> Self {
         match input {
             'I' => Numeral::I,
             'V' => Numeral::V,
@@ -43,7 +43,7 @@ impl FromStr for Numerals {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Ok(Self {
-            numerals: s.to_uppercase().chars().map(Numeral::from_char).collect(),
+            numerals: s.to_uppercase().chars().map(Numeral::from).collect(),
         })
     }
 }
@@ -75,14 +75,14 @@ mod tests {
 
     #[test]
     fn generate_single_numeral() {
-        let i: Numerals = Numerals::new(vec![Numeral::from_char('I')]);
+        let i: Numerals = Numerals::new(vec![Numeral::from('I')]);
         assert_eq!(1, i.convert_to_int());
     }
 
     #[test]
     fn convert_to_sum_2000() {
         let letters = "MM";
-        let numerals: Numerals = Numerals::new(letters.chars().map(Numeral::from_char).collect());
+        let numerals: Numerals = Numerals::new(letters.chars().map(Numeral::from).collect());
 
         assert_eq!(2000, numerals.convert_to_int());
     }
@@ -90,7 +90,7 @@ mod tests {
     #[test]
     fn convert_to_sum_2005() {
         let letters = "MMV";
-        let numbers: Vec<Numeral> = letters.chars().map(Numeral::from_char).collect();
+        let numbers: Vec<Numeral> = letters.chars().map(Numeral::from).collect();
         let numerals: Numerals = Numerals::new(numbers);
 
         assert_eq!(2005, numerals.convert_to_int());
@@ -99,7 +99,7 @@ mod tests {
     #[test]
     fn convert_all() {
         let letters = "IVXLCDM";
-        let numbers: Vec<Numeral> = letters.chars().map(Numeral::from_char).collect();
+        let numbers: Vec<Numeral> = letters.chars().map(Numeral::from).collect();
         let numerals: Numerals = Numerals::new(numbers);
 
         assert_eq!(334, numerals.convert_to_int());
